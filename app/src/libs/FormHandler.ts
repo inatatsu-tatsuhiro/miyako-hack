@@ -6,11 +6,12 @@ import { Form } from "../domains/Form";
 const baseQuery = "/forms";
 
 export const CreateForm = (form: Form) => {
+  const id = uuid();
   return new Promise((resolve, reject) => {
-    const docRef = doc(db, `${baseQuery}/${uuid()}`);
+    const docRef = doc(db, `${baseQuery}/${id}`);
     setDoc(docRef, form)
       .then(() => {
-        resolve(form);
+        resolve(id);
       })
       .catch((err) => reject(err));
   });

@@ -1,6 +1,5 @@
 import React from 'react'
 import { globalCss, styled } from "@stitches/react";
-import { Color } from "./libs/Color";
 import { BrowserRouter, Route, Routes } from "react-router-dom";
 import { CreatePage } from "./pages/Create";
 import { DetailPage } from "./pages/Detail";
@@ -31,7 +30,8 @@ const Root = styled("div", {
 const globalStyles = globalCss({
   body: {
     height: "100vh",
-    background: Color.background,
+    background: "linear-gradient(135deg, #60FF8D 0%, #0038FF 100%)",
+    backgroundAttachment: "fixed",
     margin: 0,
   },
   "*": {

@@ -51,7 +51,12 @@ export const DetailPage: React.FC = () => {
         message: `${msg.payload}`,
         id: `${formId}`,
       };
-      axios.post("https://endpoint-5uak4tcxtq-uc.a.run.app/v1/form", body);
+
+      axios
+        .post("https://endpoint-5uak4tcxtq-uc.a.run.app/v1/form", body)
+        .then((data) => {
+          console.log({ data });
+        });
     });
   };
 

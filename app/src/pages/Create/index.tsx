@@ -11,12 +11,13 @@ import { ProblemCard } from "../../components/ProblemCard";
 import { Button } from "../../components/Button";
 import { Form } from "../../domains/Form";
 import { CreateForm } from "../../libs/FormHandler";
+import { useNavigate } from "react-router";
 
 export const CreatePage: React.FC = () => {
   const [title, setTitle] = useState("");
   const [problems, setProblems] = useState<Select[]>([]);
   const [currentState, setCurrentState] = useState<"PREVIEW" | "EDIT">("EDIT");
-
+  const navi = useNavigate();
   const navigations = [
     {
       state: "PREVIEW",
@@ -69,7 +70,9 @@ export const CreatePage: React.FC = () => {
       title,
       problems,
     };
-    CreateForm(form);
+    CreateForm(form).then((data) => {
+      navi(`/${data}`);
+    });
   };
 
   const header = () => {
