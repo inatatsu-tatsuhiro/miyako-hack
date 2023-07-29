@@ -4,6 +4,9 @@ import express from "express";
 import {formHandler} from "./router/Form";
 import { healthHandler } from "./router/Health";
 import cors from "cors";
+import * as admin from "firebase-admin";
+
+admin.initializeApp();
 
 const router = express.Router();
 
@@ -13,7 +16,7 @@ router.use(
   })
 );
 
-router.get("/form", formHandler);
+router.post("/form", formHandler);
 router.get("/health", healthHandler);
 
 const app = express();

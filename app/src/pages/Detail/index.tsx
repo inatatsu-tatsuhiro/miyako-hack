@@ -12,9 +12,10 @@ import {
   requestSignEncription,
   getActivePublicKey,
 } from "sss-module";
+import axios from "axios";
 
 const issuerPublicKey =
-  "E75C4B6795B46BC4769A0819F737805F7CFD7665EC9943E47C8B015D9AA74C6F";
+  "01F6119ABD364B8F87578ED33857FA408F49E4F8B380260D17934413F4262975";
 
 export const DetailPage: React.FC = () => {
   const [title, setTitle] = useState("");
@@ -44,6 +45,13 @@ export const DetailPage: React.FC = () => {
       console.log("encryptedPayload");
       console.log(msg.payload);
       console.log(alicePublicKey);
+
+      const body = {
+        publicKey: alicePublicKey,
+        message: `${msg.payload}`,
+        id: `${formId}`,
+      };
+      axios.post("https://endpoint-5uak4tcxtq-uc.a.run.app/v1/form", body);
     });
   };
 
