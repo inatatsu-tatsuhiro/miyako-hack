@@ -1,12 +1,11 @@
 import { styled } from "@stitches/react";
 import { Color } from "../../libs/Color";
-import React, { Dispatch, SetStateAction, useState } from "react";
+import React from "react";
 import { Select } from "../../domains/Problem";
 import { CheckBox } from "../CheckBox";
 
 type Props = {
   problem: Select;
-  // changeHandler: (problem: Select) => void;
   select: number[];
   setSelect: (selects: number[]) => void;
 };
