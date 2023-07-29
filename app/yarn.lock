@@ -3643,6 +3643,11 @@ spdx-license-ids@^3.0.0:
   resolved "https://registry.yarnpkg.com/spdx-license-ids/-/spdx-license-ids-3.0.13.tgz#7189a474c46f8d47c7b0da4b987bb45e908bd2d5"
   integrity sha512-XkD+zwiqXHikFZm4AX/7JSCXA98U5Db4AFd5XUg/+9UNtnH75+Z9KxtpYiJZx36mUDVOwH83pl7yvCer6ewM3w==
 
+sss-module@^1.0.4:
+  version "1.0.4"
+  resolved "https://registry.yarnpkg.com/sss-module/-/sss-module-1.0.4.tgz#2109c1eb464f5014b1c6da88d45f656d465a4625"
+  integrity sha512-6rhsJNAbDB1i4e0p6kOcDqxsMTe+gETn5bAmxtVnumxhZRqFNeSgP65dsPLaYTzCnQqpe/p916ruIXmDmJwdcQ==
+
 stream-browserify@^3.0.0:
   version "3.0.0"
   resolved "https://registry.yarnpkg.com/stream-browserify/-/stream-browserify-3.0.0.tgz#22b0a2850cdf6503e73085da1fc7b7d0c2122f2f"

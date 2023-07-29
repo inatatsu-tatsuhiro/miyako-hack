@@ -7,6 +7,14 @@ import { GetForm } from "../../libs/FormHandler";
 import { useParams } from "react-router";
 import { Button } from "../../components/Button";
 import { SelectTestCard } from "../../components/ProblemCard/SelectTest";
+import {
+  setMessage,
+  requestSignEncription,
+  getActivePublicKey,
+} from "sss-module";
+
+const issuerPublicKey =
+  "E75C4B6795B46BC4769A0819F737805F7CFD7665EC9943E47C8B015D9AA74C6F";
 
 export const DetailPage: React.FC = () => {
   const [title, setTitle] = useState("");
@@ -23,9 +31,19 @@ export const DetailPage: React.FC = () => {
   }, []);
 
   const submit = () => {
-    console.log("submit", {
+    const newSelects = selects.map((s) => s.sort());
+    const data = {
       title,
-      selects,
+      selects: newSelects,
+    };
+    setMessage(JSON.stringify(data), issuerPublicKey);
+
+    const alicePublicKey = getActivePublicKey();
+
+    requestSignEncription().then((msg) => {
+      console.log("encryptedPayload");
+      console.log(msg.payload);
+      console.log(alicePublicKey);
     });
   };
 
