@@ -2,38 +2,54 @@ import React, { useEffect, useState } from "react";
 import { Board } from '../../components/Board'
 import { styled } from '@stitches/react'
 import { Color } from '../../libs/Color'
-import { Problem, Select } from "../../domains/Problem";
-import { ProblemCard } from "../../components/ProblemCard";
+import { Select } from "../../domains/Problem";
 import { GetForm } from "../../libs/FormHandler";
 import { useParams } from "react-router";
+import { Button } from "../../components/Button";
+import { SelectTestCard } from "../../components/ProblemCard/SelectTest";
 
 export const DetailPage: React.FC = () => {
   const [title, setTitle] = useState("");
   const { formId } = useParams();
-
-  const [problems, setProblems] = useState<Problem[]>([]);
+  const [selects, setSelects] = useState<number[][]>([]);
+  const [problems, setProblems] = useState<Select[]>([]);
   useEffect(() => {
     GetForm(`${formId}`).then((data) => {
       setProblems(data.problems);
+      const initSelects = new Array(data.problems.length).fill([]);
+      setSelects(initSelects);
       setTitle(data.title);
     });
   }, []);
 
+  const submit = () => {
+    console.log("submit", {
+      title,
+      selects,
+    });
+  };
+
   const body = () => {
     return (
       <Body>
-        {problems.map((problem) => {
+        {problems.map((problem: Select, index) => {
           return (
-            <ProblemCard
-              mode="PREVIEW"
+            <SelectTestCard
               problem={problem}
               key={problem.title}
-              update={function (p: Select): void {
-                throw new Error("Function not implemented.");
-              }}
+              select={selects[index]}
+              setSelect={(selects) =>
+                setSelects((prev) => {
+                  const newPrev = prev.map((p, i) =>
+                    i === index ? selects : p
+                  );
+                  return newPrev;
+                })
+              }
             />
           );
         })}
+        <Button clickHandler={submit} label="回答" />
       </Body>
     );
   };

@@ -1,7 +1,7 @@
 import { styled } from "@stitches/react";
 import { Color } from "../../libs/Color";
 import React, { useEffect, useState } from "react";
-import { Problem, Select } from "../../domains/Problem";
+import { Select } from "../../domains/Problem";
 import { TextField } from "../TextField";
 import { CheckBox } from "../CheckBox";
 

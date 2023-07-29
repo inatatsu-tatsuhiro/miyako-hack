@@ -5,7 +5,7 @@ import { FreeTextCard } from "./FreeText";
 import { SelectEditCard } from "./SelectEdit";
 
 type Props = {
-  mode: "PREVIEW" | "EDIT";
+  mode: "PREVIEW" | "EDIT" | "TEST";
   problem: Problem;
   update: (p: Select) => void;
 };
