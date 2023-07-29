@@ -5,24 +5,14 @@ import { styled } from "@stitches/react";
 import { Color } from "../../libs/Color";
 import axios from "axios";
 import { TextField } from "../../components/TextField";
-import { InitProblem, Problem, Select } from "../../domains/Problem";
+import { InitProblem, Select } from "../../domains/Problem";
 import { Selector } from "../../components/Selector";
 import { ProblemCard } from "../../components/ProblemCard";
-// import { Form } from "../../domains/Form";
+import { Button } from "../../components/Button";
+import { Form } from "../../domains/Form";
+import { CreateForm } from "../../libs/FormHandler";
 
 export const CreatePage: React.FC = () => {
-  // const [forms] = useState<Form>(
-  //   {
-  //     title: 'test',
-  //     problems: [
-  //       {title: 'test problem1', type: 'select', answers: ['aaaa','bbbb', 'cccc', 'dddd' ], correct: 1},
-  //       {title: 'test problem2', type: 'select', answers: ['aaaa','bbbb', 'cccc', 'dddd' ], correct: 2},
-  //       {title: 'test problem3', type: 'select', answers: ['aaaa','bbbb', 'cccc', 'dddd' ], correct: 0},
-  //       {title: 'test problem4', type: 'input', correct: 'answer'}
-  //     ]
-  //   }
-  // )
-
   const [title, setTitle] = useState("");
   const [problems, setProblems] = useState<Select[]>([]);
   const [currentState, setCurrentState] = useState<"PREVIEW" | "EDIT">("EDIT");
@@ -55,7 +45,6 @@ export const CreatePage: React.FC = () => {
   }, []);
 
   const addProblem = () => {
-    console.log("add problem");
     const newProblems = [...problems];
     newProblems.push(InitProblem);
     setProblems(newProblems);
@@ -73,6 +62,14 @@ export const CreatePage: React.FC = () => {
       return s;
     });
     setProblems(newProblems);
+  };
+
+  const submit = () => {
+    const form: Form = {
+      title,
+      problems,
+    };
+    CreateForm(form);
   };
 
   const header = () => {
@@ -106,7 +103,11 @@ export const CreatePage: React.FC = () => {
               />
             );
           })}
-          <AddButton clickHandler={addProblem} />
+          {currentState === "PREVIEW" ? (
+            <Button clickHandler={submit} label="作成" />
+          ) : (
+            <AddButton clickHandler={addProblem} />
+          )}
         </Body>
       }
     />
