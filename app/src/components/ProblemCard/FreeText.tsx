@@ -5,12 +5,9 @@ import { Problem } from "../../domains/Problem";
 
 
 type Props = {
-  mode: "PREVIEW" | "EDIT";
   problem: Problem;
 };
-export const FreeTextCard: React.FC<Props> = ({ mode, problem }) => {
-  console.log(mode);
-
+export const FreeTextCard: React.FC<Props> = ({ problem }) => {
   return (
     <Root>
       <Title>{problem.title}</Title>
