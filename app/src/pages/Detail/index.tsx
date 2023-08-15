@@ -9,13 +9,26 @@ import { Button } from "../../components/Button";
 import { SelectTestCard } from "../../components/ProblemCard/SelectTest";
 import {
   setMessage,
+  setTransaction,
+  requestSign,
   requestSignEncription,
   getActivePublicKey,
 } from "sss-module";
 import axios from "axios";
+import { AccountMetadataTransaction, AggregateTransaction, Deadline, NetworkType, PublicAccount, RepositoryFactoryHttp, SignedTransaction, UInt64 } from "symbol-sdk";
 
 const issuerPublicKey =
   "01F6119ABD364B8F87578ED33857FA408F49E4F8B380260D17934413F4262975";
+
+export const GENERATION_HASH =
+  '49D6E1CE276A85B70EAFE52349AACCA389302E7A9754BCF1221E79494FC665A4'
+
+  const NODE_URL = 'https://sym-test-03.opening-line.jp:3001'
+
+export const EPOCH_ADJUST = 1667250467
+
+export const deadline = Deadline.create(EPOCH_ADJUST)
+export const fee = UInt64.fromUint(2000000)
 
 export const DetailPage: React.FC = () => {
   const [title, setTitle] = useState("");
@@ -55,7 +68,30 @@ export const DetailPage: React.FC = () => {
       axios
         .post("https://endpoint-5uak4tcxtq-uc.a.run.app/v1/form", body)
         .then((data) => {
-          console.log({ data });
+          const payload = data.data.metadataTx
+          const metadataTransaction = AccountMetadataTransaction.createFromPayload(payload)
+          const Holder = PublicAccount.createFromPublicKey(
+            getActivePublicKey(),
+            NetworkType.TEST_NET
+          )
+
+          const agTx = AggregateTransaction.createComplete(
+            deadline,
+            [metadataTransaction.toAggregate(Holder)],
+            NetworkType.TEST_NET,
+            [],
+            fee
+          )
+          console.log({ agTx })
+
+          setTransaction(agTx)
+
+          requestSign().then((signedTx: SignedTransaction) => {
+            console.log({ signedTx })
+            const repoFac = new RepositoryFactoryHttp(NODE_URL)
+            const transactionHttp = repoFac.createTransactionRepository()
+            transactionHttp.announce(signedTx)
+          })
         });
     });
   };
