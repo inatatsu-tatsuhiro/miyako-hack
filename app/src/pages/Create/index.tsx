@@ -52,20 +52,18 @@ export const CreatePage: React.FC = () => {
   };
 
   const updateProblem = (index: number, newProblem: Problem) => {
-    console.log(newProblem);
     const newProblems = [...problems].map((p, i) => {
 
       if (i !== index) {
         return p
       }
-
-        const s: Problem = {
-          type: p.type,
-          title: newProblem.title,
-          correct: newProblem.correct,
-          answers: newProblem.answers,
-        };
-        return s;
+      const s: Problem = {
+        type: newProblem.type,
+        title: newProblem.title,
+        correct: newProblem.correct,
+        answers: newProblem.answers,
+      };
+      return s;
     });
     setProblems(newProblems);
   };

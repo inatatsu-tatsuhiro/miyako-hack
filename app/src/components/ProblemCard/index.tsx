@@ -11,15 +11,45 @@ type Props = {
   update: (p: Problem) => void;
 };
 export const ProblemCard: React.FC<Props> = ({ mode, problem, update }) => {
+
+  const navigations = [
+    {
+      state: "INPUT",
+      label: "入力",
+      action: () => {
+        update({
+          title: '',
+          answers: '',
+          type: 'input',
+          correct: ''
+        })
+      }
+    },
+    {
+      state: "SELECT",
+      label: "選択",
+      action: () => {
+        update({
+          title: '',
+          answers: '',
+          type: 'select',
+          correct: ''
+        })
+      }
+    }
+  ]
+
+  // console.log('pro', problem)
+
   if (problem.type === "select") {
     return mode === "EDIT" ? (
-      <SelectEditCard changeHandler={update} problem={problem} />
+      <SelectEditCard changeHandler={update} problem={problem} navigations={navigations}/>
     ) : (
       <SelectCard problem={problem} />
     );
   } else {
     return mode === "EDIT" ? (
-      <FreeTextEditCard changeHandler={update} problem={problem} />
+      <FreeTextEditCard changeHandler={update} problem={problem} navigations={navigations} />
     ) : (
       <FreeTextCard problem={problem} />
     );

@@ -4,18 +4,21 @@ import React, { useEffect, useState } from "react";
 import { Problem } from "../../domains/Problem";
 import { TextField } from "../TextField";
 import { CheckBox } from "../CheckBox";
+import { Navigation, Selector } from "../Selector";
 
 type Props = {
   problem: Problem;
   changeHandler: (problem: Problem) => void;
+  navigations: Navigation[]
 };
-export const SelectEditCard: React.FC<Props> = ({ problem, changeHandler }) => {
+export const SelectEditCard: React.FC<Props> = ({ problem, changeHandler, navigations }) => {
   const [ans1, setAns1] = useState(problem.answers.split(':')[0]);
   const [ans2, setAns2] = useState(problem.answers.split(':')[1]);
   const [ans3, setAns3] = useState(problem.answers.split(':')[2]);
   const [ans4, setAns4] = useState(problem.answers.split(':')[3]);
   const [title, setTitle] = useState(problem.title);
   const [correct, setCorrect] = useState(problem.correct);
+
 
   useEffect(() => {
     changeHandler({
@@ -30,6 +33,7 @@ export const SelectEditCard: React.FC<Props> = ({ problem, changeHandler }) => {
     <Root>
       <Title>
         <TextField label="問題を入力" text={title} setText={setTitle} />
+         <Selector navigations={navigations} currentState={"SELECT"} />
       </Title>
       <Hr />
       <Body>
@@ -84,6 +88,10 @@ const Title = styled("div", {
   fontSize: "16px",
   color: Color.text,
   padding: "24px",
+  display: 'flex',
+  justifyContent: 'space-between',
+  alignItems: 'end',
+  gap: '16px'
 });
 
 const Hr = styled("div", {

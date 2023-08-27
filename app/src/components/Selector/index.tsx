@@ -2,7 +2,7 @@ import { styled } from "@stitches/react";
 import { Color } from "../../libs/Color";
 import React from "react";
 
-type Navigation = {
+export type Navigation = {
   state: string;
   label: string;
   action: () => void;
