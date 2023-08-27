@@ -6,13 +6,13 @@ import { Color } from "../../libs/Color";
 
 type Props = {
   clickHandler: () => void;
-  isDefault: boolean;
+  checked: boolean;
 };
 
-export const CheckBox: React.FC<Props> = ({ clickHandler, isDefault }) => {
+export const CheckBox: React.FC<Props> = ({ clickHandler, checked }) => {
   return (
     <Root>
-      <CBRoot onClick={clickHandler} defaultChecked={isDefault}>
+      <CBRoot onClick={clickHandler} defaultChecked={checked} checked={checked}>
         <CBIndicator>
           <CheckIcon />
         </CBIndicator>

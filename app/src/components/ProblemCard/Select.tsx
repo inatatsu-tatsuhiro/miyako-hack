@@ -1,11 +1,11 @@
 import { styled } from "@stitches/react";
 import { Color } from "../../libs/Color";
 import React from "react";
-import { Select } from "../../domains/Problem";
+import { Problem } from "../../domains/Problem";
 
 
 type Props = {
-  problem: Select;
+  problem: Problem;
 };
 export const SelectCard: React.FC<Props> = ({ problem }) => {
   const title = problem.title === "" ? "問題が未入力です" : problem.title;
@@ -14,11 +14,11 @@ export const SelectCard: React.FC<Props> = ({ problem }) => {
       <Title>{title}</Title>
       <Hr />
       <Body>
-        {problem.answers.map((answer, index) => {
+        {problem.answers.split(':').map((answer, index) => {
           const ans = answer === "" ? "選択肢が未入力です" : answer;
 
           return (
-            <Answer isCorrect={!!problem.correct.includes(index)} key={index}>
+            <Answer isCorrect={!!problem.correct.includes(String(index))} key={index}>
               {ans}
             </Answer>
           );

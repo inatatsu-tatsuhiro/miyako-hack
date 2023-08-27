@@ -1,20 +1,29 @@
 import { styled } from "@stitches/react";
 import { Color } from "../../libs/Color";
-import React from "react";
+import React, { Dispatch, SetStateAction, useState } from "react";
 import { Problem } from "../../domains/Problem";
+import { TextField } from "../TextField";
 
 
 type Props = {
   problem: Problem;
+  input: string,
+  setInput: (input: string) => void
 };
-export const FreeTextCard: React.FC<Props> = ({ problem }) => {
-  const title = problem.title === "" ? "問題が未入力です" : problem.title;
+export const FreeTextTestCard: React.FC<Props> = ({ problem, input,setInput }) => {
+  const [title, setTitle] = useState(problem.title)
   return (
     <Root>
-      <Title>{title}</Title>
+      <Title>
+        <TextField label="問題を入力" text={title} setText={setTitle} />
+      </Title>
       <Hr />
       <Body>
-        {problem.correct}
+        <TextField 
+          label={"回答を入力"} 
+          text={input} 
+          setText={setInput as Dispatch<SetStateAction<string>>} 
+        />
       </Body>
     </Root>
   );

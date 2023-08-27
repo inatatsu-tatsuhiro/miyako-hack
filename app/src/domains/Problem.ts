@@ -1,21 +1,13 @@
-export type Select = {
-  type: "select";
+export type Problem = {
+  type: "select" | "input";
   title: string;
-  answers: string[];
-  correct: number[];
-};
-
-export type FreeText = {
-  type: "input";
-  title: string;
+  answers: string;
   correct: string;
-};
+}
 
-export type Problem = Select | FreeText;
-
-export const InitProblem: Select = {
+export const InitProblem: Problem = {
   type: "select",
   title: "",
-  answers: ["", "", "", ""],
-  correct: [],
+  answers: ":::",
+  correct: "",
 };

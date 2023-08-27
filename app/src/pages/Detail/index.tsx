@@ -2,7 +2,7 @@ import React, { useEffect, useState } from "react";
 import { Board } from '../../components/Board'
 import { styled } from '@stitches/react'
 import { Color } from '../../libs/Color'
-import { Select } from "../../domains/Problem";
+import { Problem } from "../../domains/Problem";
 import { GetForm } from "../../libs/FormHandler";
 import { useParams } from "react-router";
 import { Button } from "../../components/Button";
@@ -16,6 +16,7 @@ import {
 } from "sss-module";
 import axios from "axios";
 import { AccountMetadataTransaction, AggregateTransaction, Deadline, NetworkType, PublicAccount, RepositoryFactoryHttp, SignedTransaction, UInt64 } from "symbol-sdk";
+import { FreeTextTestCard } from "../../components/ProblemCard/FreeTextTest";
 
 const issuerPublicKey =
   "01F6119ABD364B8F87578ED33857FA408F49E4F8B380260D17934413F4262975";
@@ -33,22 +34,22 @@ export const fee = UInt64.fromUint(2000000)
 export const DetailPage: React.FC = () => {
   const [title, setTitle] = useState("");
   const { formId } = useParams();
-  const [selects, setSelects] = useState<number[][]>([]);
-  const [problems, setProblems] = useState<Select[]>([]);
+  const [answer, setAnswer] = useState<string[]>([])
+  const [problems, setProblems] = useState<Problem[]>([]);
   useEffect(() => {
     GetForm(`${formId}`).then((data) => {
+      console.log({data})
       setProblems(data.problems);
-      const initSelects = new Array(data.problems.length).fill([]);
-      setSelects(initSelects);
+      const initAnswer = new Array(data.problems.length).fill('');
+      setAnswer(initAnswer)
       setTitle(data.title);
     });
   }, []);
 
   const submit = () => {
-    const newSelects = selects.map((s) => s.sort());
     const data = {
       title,
-      selects: newSelects,
+      answer,
     };
     setMessage(JSON.stringify(data), issuerPublicKey);
 
@@ -99,22 +100,26 @@ export const DetailPage: React.FC = () => {
   const body = () => {
     return (
       <Body>
-        {problems.map((problem: Select, index) => {
-          return (
-            <SelectTestCard
-              problem={problem}
-              key={problem.title}
-              select={selects[index]}
-              setSelect={(selects) =>
-                setSelects((prev) => {
-                  const newPrev = prev.map((p, i) =>
-                    i === index ? selects : p
-                  );
-                  return newPrev;
-                })
-              }
-            />
-          );
+        {problems.map((problem: Problem, i) => {
+          if (problem.type === 'select') {
+            return (
+              <SelectTestCard
+                problem={problem}
+                key={problem.title}
+                select={answer[i]}
+                setSelect={(select) => {
+                  setAnswer((prev) => prev.map((e, j) => i === j ? select : e))
+                }}
+              />
+              );
+            } else {
+              return (<FreeTextTestCard                  
+                problem={problem}
+                input={answer[i]}
+                setInput={(select) => {
+                  setAnswer((prev) => prev.map((e, j) => i === j ? e : select))
+                }}/>)
+            }
         })}
         <Button clickHandler={submit} label="回答" />
       </Body>

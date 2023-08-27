@@ -5,7 +5,7 @@ import { styled } from "@stitches/react";
 import { Color } from "../../libs/Color";
 import axios from "axios";
 import { TextField } from "../../components/TextField";
-import { InitProblem, Select } from "../../domains/Problem";
+import { InitProblem, Problem } from "../../domains/Problem";
 import { Selector } from "../../components/Selector";
 import { ProblemCard } from "../../components/ProblemCard";
 import { Button } from "../../components/Button";
@@ -15,7 +15,7 @@ import { useNavigate } from "react-router";
 
 export const CreatePage: React.FC = () => {
   const [title, setTitle] = useState("");
-  const [problems, setProblems] = useState<Select[]>([]);
+  const [problems, setProblems] = useState<Problem[]>([]);
   const [currentState, setCurrentState] = useState<"PREVIEW" | "EDIT">("EDIT");
   const navi = useNavigate();
   const navigations = [
@@ -51,16 +51,21 @@ export const CreatePage: React.FC = () => {
     setProblems(newProblems);
   };
 
-  const updateProblem = (index: number, newProblem: Select) => {
+  const updateProblem = (index: number, newProblem: Problem) => {
     console.log(newProblem);
     const newProblems = [...problems].map((p, i) => {
-      const s: Select = {
-        type: "select",
-        title: index === i ? newProblem.title : p.title,
-        correct: index === i ? newProblem.correct : p.correct,
-        answers: index === i ? newProblem.answers : p.answers,
-      };
-      return s;
+
+      if (i !== index) {
+        return p
+      }
+
+        const s: Problem = {
+          type: p.type,
+          title: newProblem.title,
+          correct: newProblem.correct,
+          answers: newProblem.answers,
+        };
+        return s;
     });
     setProblems(newProblems);
   };
@@ -102,7 +107,7 @@ export const CreatePage: React.FC = () => {
               <ProblemCard
                 problem={problem}
                 mode={currentState}
-                update={(p: Select) => updateProblem(index, p)}
+                update={(p: Problem) => updateProblem(index, p)}
               />
             );
           })}

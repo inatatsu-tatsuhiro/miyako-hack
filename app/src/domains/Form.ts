@@ -1,6 +1,6 @@
-import { Select } from "./Problem";
+import { Problem } from "./Problem";
 
 export type Form = {
   title: string;
-  problems: Select[];
+  problems: Problem[];
 };

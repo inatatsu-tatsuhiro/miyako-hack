@@ -1,13 +1,13 @@
 import { styled } from "@stitches/react";
 import { Color } from "../../libs/Color";
 import React from "react";
-import { Select } from "../../domains/Problem";
+import { Problem } from "../../domains/Problem";
 import { CheckBox } from "../CheckBox";
 
 type Props = {
-  problem: Select;
-  select: number[];
-  setSelect: (selects: number[]) => void;
+  problem: Problem;
+  select: string;
+  setSelect: (input: string) => void
 };
 export const SelectTestCard: React.FC<Props> = ({
   problem,
@@ -22,50 +22,38 @@ export const SelectTestCard: React.FC<Props> = ({
         <Row>
           <CheckBox
             clickHandler={() => {
-              const s = !!select.includes(0)
-                ? select.filter((e) => e !== 0)
-                : [...select, 0];
-              setSelect(s);
+              setSelect('0');
             }}
-            isDefault={false}
+            checked={select === '0'}
           />
-          <Answer>{problem.answers[0]}</Answer>
+          <Answer>{problem.answers.split(':')[0]}</Answer>
         </Row>
         <Row>
           <CheckBox
             clickHandler={() => {
-              const s = !!select.includes(1)
-                ? select.filter((e) => e !== 1)
-                : [...select, 1];
-              setSelect(s);
+              setSelect('1');
             }}
-            isDefault={false}
+            checked={select === '1'}
           />
-          <Answer>{problem.answers[1]}</Answer>
+          <Answer>{problem.answers.split(':')[1]}</Answer>
         </Row>
         <Row>
           <CheckBox
             clickHandler={() => {
-              const s = !!select.includes(2)
-                ? select.filter((e) => e !== 2)
-                : [...select, 2];
-              setSelect(s);
+              setSelect('2');
             }}
-            isDefault={false}
+            checked={select === '2'}
           />
-          <Answer>{problem.answers[2]}</Answer>
+          <Answer>{problem.answers.split(':')[2]}</Answer>
         </Row>
         <Row>
           <CheckBox
             clickHandler={() => {
-              const s = !!select.includes(3)
-                ? select.filter((e) => e !== 3)
-                : [...select, 3];
-              setSelect(s);
+              setSelect('3');
             }}
-            isDefault={false}
+            checked={select === '3'}
           />
-          <Answer>{problem.answers[3]}</Answer>
+          <Answer>{problem.answers.split(':')[3]}</Answer>
         </Row>
       </Body>
     </Root>

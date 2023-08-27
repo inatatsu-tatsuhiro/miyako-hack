@@ -49,19 +49,20 @@ export async function formHandler(req: Request, res: Response) {
   );
 
   const m = JSON.parse(msg.payload);
-
+  
   const db = admin.firestore();
-
+  
   const docSnap = await db.doc(`forms/${id}`).get();
-
+  
   const data = docSnap.data();
 
   const problems = data?.problems.map((p: any) => p.correct);
 
-  const tmp = [...Array(problems.length).keys()];
+  functions.logger.log('m', m.answer)
+  functions.logger.log('pr', problems)
 
-  const count = tmp.filter(
-    (i: number) => problems[i].toString() === m.selects[i].toString()
+  const count = problems.filter(
+    (ans: string, i: number) => m.answer[i] === ans
   ).length;
 
   const credential = {
@@ -93,7 +94,7 @@ export async function formHandler(req: Request, res: Response) {
 
   const credentialIndex = {
     issuer: issuerAccount.publicKey,
-    key: `MIYAKO-${id}`,
+    key: `KDIX-TEST-${id}`,
     hash: credentialHash,
   };
 
