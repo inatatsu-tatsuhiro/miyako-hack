@@ -7,10 +7,9 @@ import { TextField } from "../TextField";
 
 type Props = {
   problem: Problem;
-  input: string,
   setInput: (input: string) => void
 };
-export const FreeTextTestCard: React.FC<Props> = ({ problem, input,setInput }) => {
+export const FreeTextTestCard: React.FC<Props> = ({ problem,setInput }) => {
   const [title, setTitle] = useState(problem.title)
   const [textField, setTextFiled] = useState('')
 

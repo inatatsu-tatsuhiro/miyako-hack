@@ -115,7 +115,6 @@ export const DetailPage: React.FC = () => {
             } else {
               return (<FreeTextTestCard                  
                 problem={problem}
-                input={answer[i]}
                 setInput={(select) => {
                   setAnswer((prev) => prev.map((e, j) => i === j ? select : e))
                 }}/>)
