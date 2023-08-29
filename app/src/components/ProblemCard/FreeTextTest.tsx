@@ -1,6 +1,6 @@
 import { styled } from "@stitches/react";
 import { Color } from "../../libs/Color";
-import React, { Dispatch, SetStateAction, useState } from "react";
+import React, { useEffect, useState } from "react";
 import { Problem } from "../../domains/Problem";
 import { TextField } from "../TextField";
 
@@ -12,6 +12,12 @@ type Props = {
 };
 export const FreeTextTestCard: React.FC<Props> = ({ problem, input,setInput }) => {
   const [title, setTitle] = useState(problem.title)
+  const [textField, setTextFiled] = useState('')
+
+  useEffect(() => {
+    setInput(textField)
+  }, [textField])
+
   return (
     <Root>
       <Title>
@@ -21,8 +27,8 @@ export const FreeTextTestCard: React.FC<Props> = ({ problem, input,setInput }) =
       <Body>
         <TextField 
           label={"回答を入力"} 
-          text={input} 
-          setText={setInput as Dispatch<SetStateAction<string>>} 
+          text={textField} 
+          setText={setTextFiled} 
         />
       </Body>
     </Root>

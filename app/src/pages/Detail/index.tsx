@@ -117,7 +117,7 @@ export const DetailPage: React.FC = () => {
                 problem={problem}
                 input={answer[i]}
                 setInput={(select) => {
-                  setAnswer((prev) => prev.map((e, j) => i === j ? e : select))
+                  setAnswer((prev) => prev.map((e, j) => i === j ? select : e))
                 }}/>)
             }
         })}
